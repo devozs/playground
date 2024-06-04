@@ -1,0 +1,86 @@
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: jenkins
+  namespace: devops-jenkins
+spec:
+  routes:
+    - conditions:
+        - prefix: /jenkins
+      services:
+        - name: jenkins-service
+          port: 8080
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  routes:
+    - conditions:
+        - prefix: /
+      services:
+        - name: grafana
+          port: 80
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: metmon
+  namespace: metmon
+spec:
+  routes:
+    - conditions:
+        - prefix: /metmon
+      services:
+        - name: metmon
+          port: 80
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: kasten
+  namespace: kasten-io
+spec:
+  routes:
+    - conditions:
+        - prefix: /k10
+      services:
+        - name: gateway
+          port: 80
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: postgres-ha
+  namespace: postgres
+spec:
+  routes:
+    - conditions:
+        - prefix: /data
+      services:
+        - name: devozs-rw
+          port: 5432
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: root
+  namespace: default
+spec:
+  virtualhost:
+    fqdn: localhost
+#    tls:
+#      secretName: wildcard-devozs-com
+  includes:
+    - name: jenkins
+      namespace: devops-jenkins
+    - name: grafana
+      namespace: monitoring
+    - name: metmon
+      namespace: metmon
+    - name: kasten
+      namespace: kasten-io
+    - name: postgres-ha
+      namespace: postgres

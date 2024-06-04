@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-auth
+type: kubernetes.io/basic-auth
+stringData:
+  username: app      # required field for kubernetes.io/basic-auth
+  password: testing # required field for kubernetes.io/basic-auth

@@ -1,0 +1,16 @@
+.idea
+/lib/
+/ignore/
+/jenkins/kubernetes/volume.yaml
+/jenkins/kubernetes/results.json
+/setup-operator/setup-operator:0.0.1.tar
+/setup-operator:0.0.1.tar
+
+/setup-operator/**/*.exe
+/setup-operator/**/*.exe~
+/setup-operator/**/*.dll
+/setup-operator/**/*.so
+/setup-operator/**/*.dylib
+/setup-operator/bin/*
+/setup-operator/**/Dockerfile.cross
+

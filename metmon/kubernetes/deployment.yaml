@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: metmon
+  name: metmon
+  namespace: metmon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metmon
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: metmon
+    spec:
+      containers:
+        - image: metmon:0.0.1
+          name: metmon
+          resources: {}
+          livenessProbe:
+            httpGet:
+              path: /metmon/actuator/health/liveness
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /metmon/actuator/health/readiness
+              port: 8080
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
+status: {}

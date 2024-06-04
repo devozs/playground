@@ -1,0 +1,187 @@
+{
+	"kics_version": "v1.7.13",
+	"files_scanned": 1,
+	"lines_scanned": 15,
+	"files_parsed": 1,
+	"lines_parsed": 15,
+	"lines_ignored": 0,
+	"files_failed_to_scan": 0,
+	"queries_total": 49,
+	"queries_failed_to_execute": 0,
+	"queries_failed_to_compute_similarity_id": 0,
+	"scan_id": "console",
+	"severity_counters": {
+		"HIGH": 0,
+		"INFO": 4,
+		"LOW": 2,
+		"MEDIUM": 2,
+		"TRACE": 0
+	},
+	"total_counter": 8,
+	"total_bom_resources": 0,
+	"start": "2024-05-29T04:39:52.887973547Z",
+	"end": "2024-05-29T04:39:54.753402479Z",
+	"paths": [
+		"/path/Dockerfile"
+	],
+	"queries": [
+		{
+			"query_name": "Apt Get Install Pin Version Not Defined",
+			"query_id": "965a08d7-ef86-4f14-8792-4a3b2098937e",
+			"query_url": "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+			"severity": "MEDIUM",
+			"platform": "Dockerfile",
+			"cwe": "1357",
+			"category": "Supply-Chain",
+			"experimental": false,
+			"description": "When installing a package, its pin version should be defined",
+			"description_id": "e0e1edad",
+			"files": [
+				{
+					"file_name": "../../path/Dockerfile",
+					"similarity_id": "9d64fc4a34a8a5d98383828edc7c410820a5c72cbc70b4e269f16891c0d0e751",
+					"line": 10,
+					"issue_type": "MissingAttribute",
+					"search_key": "FROM={{jenkins/jenkins:2.440.1-jdk17}}.RUN={{apt-get update \u0026\u0026 apt-get install -y docker-ce-cli}}",
+					"search_line": -1,
+					"search_value": "docker-ce-cli",
+					"expected_value": "Package 'docker-ce-cli' has version defined",
+					"actual_value": "Package 'docker-ce-cli' does not have version defined"
+				},
+				{
+					"file_name": "../../path/Dockerfile",
+					"similarity_id": "5ef5ef532128867015acb50be3c13dd272cd70e4952e56125302b9ee972454f1",
+					"line": 3,
+					"issue_type": "MissingAttribute",
+					"search_key": "FROM={{jenkins/jenkins:2.440.1-jdk17}}.RUN={{apt-get update \u0026\u0026 apt-get install -y lsb-release}}",
+					"search_line": -1,
+					"search_value": "lsb-release",
+					"expected_value": "Package 'lsb-release' has version defined",
+					"actual_value": "Package 'lsb-release' does not have version defined"
+				}
+			]
+		},
+		{
+			"query_name": "Healthcheck Instruction Missing",
+			"query_id": "b03a748a-542d-44f4-bb86-9199ab4fd2d5",
+			"query_url": "https://docs.docker.com/engine/reference/builder/#healthcheck",
+			"severity": "LOW",
+			"platform": "Dockerfile",
+			"cwe": "710",
+			"category": "Insecure Configurations",
+			"experimental": false,
+			"description": "Ensure that HEALTHCHECK is being used. The HEALTHCHECK instruction tells Docker how to test a container to check that it is still working",
+			"description_id": "426121ee",
+			"files": [
+				{
+					"file_name": "../../path/Dockerfile",
+					"similarity_id": "ad25761fa4385eb2209ffb3d4645a4ecfe29b05e94763a0479b8335e194a6444",
+					"line": 1,
+					"issue_type": "MissingAttribute",
+					"search_key": "FROM={{jenkins/jenkins:2.440.1-jdk17}}",
+					"search_line": -1,
+					"search_value": "",
+					"expected_value": "Dockerfile should contain instruction 'HEALTHCHECK'",
+					"actual_value": "Dockerfile doesn't contain instruction 'HEALTHCHECK'"
+				}
+			]
+		},
+		{
+			"query_name": "Multiple RUN, ADD, COPY, Instructions Listed",
+			"query_id": "0008c003-79aa-42d8-95b8-1c2fe37dbfe6",
+			"query_url": "https://sysdig.com/blog/dockerfile-best-practices/",
+			"severity": "LOW",
+			"platform": "Dockerfile",
+			"cwe": "710",
+			"category": "Best Practices",
+			"experimental": false,
+			"description": "Multiple commands (RUN, COPY, ADD) should be grouped in order to reduce the number of layers.",
+			"description_id": "29bd3a34",
+			"files": [
+				{
+					"file_name": "../../path/Dockerfile",
+					"similarity_id": "b67f75204ab3420cd2a6ed6e093d5430d9747bb387c46e8565efefe5fe06878e",
+					"line": 3,
+					"issue_type": "RedundantAttribute",
+					"search_key": "FROM={{jenkins/jenkins:2.440.1-jdk17}}.{{RUN apt-get update \u0026\u0026 apt-get install -y lsb-release}}",
+					"search_line": -1,
+					"search_value": "",
+					"expected_value": "There isn´t any RUN instruction that could be grouped",
+					"actual_value": "There are RUN instructions that could be grouped"
+				}
+			]
+		},
+		{
+			"query_name": "APT-GET Not Avoiding Additional Packages",
+			"query_id": "7384dfb2-fcd1-4fbf-91cd-6c44c318c33c",
+			"query_url": "https://docs.docker.com/engine/reference/builder/#run",
+			"severity": "INFO",
+			"platform": "Dockerfile",
+			"cwe": "710",
+			"category": "Supply-Chain",
+			"experimental": false,
+			"description": "Check if any apt-get installs don't use '--no-install-recommends' flag to avoid installing additional packages.",
+			"description_id": "2e92d18c",
+			"files": [
+				{
+					"file_name": "../../path/Dockerfile",
+					"similarity_id": "ba166e72b2ed3c0c3f8f6b78efae3fbe226e7fa31f5d515e510fb49db11cba64",
+					"line": 10,
+					"issue_type": "IncorrectValue",
+					"search_key": "FROM={{jenkins/jenkins:2.440.1-jdk17}}.{{RUN apt-get update \u0026\u0026 apt-get install -y docker-ce-cli}}",
+					"search_line": -1,
+					"search_value": "",
+					"expected_value": "'RUN apt-get update \u0026\u0026 apt-get install -y docker-ce-cli' uses '--no-install-recommends' flag to avoid installing additional packages",
+					"actual_value": "'RUN apt-get update \u0026\u0026 apt-get install -y docker-ce-cli' does not use '--no-install-recommends' flag to avoid installing additional packages"
+				},
+				{
+					"file_name": "../../path/Dockerfile",
+					"similarity_id": "376dd77244999f0464948135e53fa2441796546e5e5ee3fef51e706e657ad84f",
+					"line": 3,
+					"issue_type": "IncorrectValue",
+					"search_key": "FROM={{jenkins/jenkins:2.440.1-jdk17}}.{{RUN apt-get update \u0026\u0026 apt-get install -y lsb-release}}",
+					"search_line": -1,
+					"search_value": "",
+					"expected_value": "'RUN apt-get update \u0026\u0026 apt-get install -y lsb-release' uses '--no-install-recommends' flag to avoid installing additional packages",
+					"actual_value": "'RUN apt-get update \u0026\u0026 apt-get install -y lsb-release' does not use '--no-install-recommends' flag to avoid installing additional packages"
+				}
+			]
+		},
+		{
+			"query_name": "Apt Get Install Lists Were Not Deleted",
+			"query_id": "df746b39-6564-4fed-bf85-e9c44382303c",
+			"query_url": "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+			"severity": "INFO",
+			"platform": "Dockerfile",
+			"cwe": "459",
+			"category": "Supply-Chain",
+			"experimental": false,
+			"description": "After using apt-get install, it is needed to delete apt-get lists",
+			"description_id": "4236a50c",
+			"files": [
+				{
+					"file_name": "../../path/Dockerfile",
+					"similarity_id": "61323033043dc10ac299d9d8b769ea2fbcf961e277dabc2bab66b5ccae52f9ab",
+					"line": 3,
+					"issue_type": "IncorrectValue",
+					"search_key": "FROM={{jenkins/jenkins:2.440.1-jdk17}}.RUN={{apt-get update \u0026\u0026 apt-get install -y lsb-release}}",
+					"search_line": -1,
+					"search_value": "",
+					"expected_value": "After using apt-get install, the apt-get lists should be deleted",
+					"actual_value": "After using apt-get install, the apt-get lists were not deleted"
+				},
+				{
+					"file_name": "../../path/Dockerfile",
+					"similarity_id": "35ad6d23afdb88d9ac7cd38c0b0b4e1a3bd162f9170bead13c1617eaabff747e",
+					"line": 10,
+					"issue_type": "IncorrectValue",
+					"search_key": "FROM={{jenkins/jenkins:2.440.1-jdk17}}.RUN={{apt-get update \u0026\u0026 apt-get install -y docker-ce-cli}}",
+					"search_line": -1,
+					"search_value": "",
+					"expected_value": "After using apt-get install, the apt-get lists should be deleted",
+					"actual_value": "After using apt-get install, the apt-get lists were not deleted"
+				}
+			]
+		}
+	]
+}

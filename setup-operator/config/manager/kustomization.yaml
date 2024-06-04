@@ -1,0 +1,10 @@
+resources:
+- manager.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: controller
+  newName: setup-operator
+  newTag: 0.0.1
+- name: controller=setup-operator:0.0.1IMG=setup-operator
+  newTag: 0.0.1
